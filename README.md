@@ -1,27 +1,98 @@
-# BidWise AI RFP Writer
+<div align="center">
 
-A runnable starter for an AI-assisted RFP analysis and response workflow. Built for Windows + VS Code.
+# 🚀 BidWise AI
 
-## What's included
-- React + TypeScript + Vite frontend with responsive enterprise layout.
-- FastAPI backend with SQLite persistence, health checks, RFP CRUD, document upload, analysis records, and qualification scoring.
-- PDF/DOCX text extraction with page/paragraph metadata where available.
-- Server-side Gemini provider adapter (optional). If no API key is configured, analysis reports that AI is unavailable; it does not fabricate an AI response.
-- Explicitly labeled demo records.
-- Basic backend tests and environment examples.
+### AI-Powered RFP Analysis & Response Workspace
 
-## Current scope
-This ZIP is a runnable foundation, not a claim that every enterprise feature in the master specification is already production-complete. Discovery crawling, production-grade authentication/RBAC, robust OCR, vector RAG, XLSX/PDF export, and full review/version workflows are follow-on implementation stages. The starter is designed so these can be added without replacing the foundation.
+**Turn complex RFP documents into structured requirements, risk insights, and review-ready findings.**
 
-## Prerequisites
-- Python 3.11 or 3.12 recommended.
-- Node.js 20 LTS or newer.
-- VS Code.
+<p>
+  <img src="https://img.shields.io/badge/React-Frontend-149ECA?style=for-the-badge&logo=react&logoColor=white" alt="React" />
+  <img src="https://img.shields.io/badge/TypeScript-Frontend-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Vite-Build-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
+  <img src="https://img.shields.io/badge/Python-Backend-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python" />
+  <img src="https://img.shields.io/badge/FastAPI-API-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI" />
+</p>
+<p>
+  <img src="https://img.shields.io/badge/Gemini-AI%20Integration-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white" alt="Gemini" />
+  <img src="https://img.shields.io/badge/SQLite-Persistence-003B57?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite" />
+  <img src="https://img.shields.io/badge/PDF%20%2B%20DOCX-Document%20Parsing-E85D75?style=for-the-badge" alt="PDF and DOCX" />
+  <img src="https://img.shields.io/badge/Netlify-Frontend%20Hosting-00C7B7?style=for-the-badge&logo=netlify&logoColor=white" alt="Netlify" />
+  <img src="https://img.shields.io/badge/Render-Backend%20Hosting-46E3B7?style=for-the-badge&logo=render&logoColor=black" alt="Render" />
+</p>
 
-## Run on Windows
-Open this folder in VS Code. Open two terminals.
+</div>
 
-### Terminal 1 — backend
+---
+
+## ✨ Overview
+
+**BidWise AI** is a web application starter for AI-assisted Request for Proposal (RFP) analysis. Upload a PDF or DOCX document to extract its text, request a structured AI analysis, and review requirements and findings in a dashboard-oriented workspace.
+
+The application combines a React + TypeScript frontend with a FastAPI backend. Gemini integration is performed server-side, keeping the provider key out of the browser.
+
+> **Project status:** This repository is a runnable starter with core API endpoints and document-analysis integration. It is not yet a complete enterprise procurement automation platform. AI availability depends on provider access, model availability, quotas, and service status.
+
+## 🎯 Core Features
+
+| Feature | Description |
+| --- | --- |
+| 📊 Dashboard | View RFP workspace summaries and activity metrics. |
+| 📄 PDF/DOCX extraction | Extract text from supported PDF and Word documents. Scanned PDFs require OCR, which is not included. |
+| 🤖 Gemini analysis | Request a document summary, RFP classification, requirements, priorities, risks, and warnings. |
+| 🧾 RFP records | Create, list, search, and delete supported RFP records through the API, with demo records clearly labeled. |
+| 🔎 Findings & review | Store analysis results and update requirement review statuses. Human verification remains necessary. |
+| 📈 Analytics | Calculate metrics from saved RFP and analysis records. |
+| ✍️ Response drafting | Generate a draft from a requirement and supplied evidence when Gemini is available. |
+| 🛡️ Server-side API key | Keep the Gemini key in backend environment configuration rather than frontend code. |
+
+## 🧰 Tech Stack
+
+- **Frontend:** React, TypeScript, Vite
+- **Backend:** Python, FastAPI
+- **Database:** SQLite by default, through SQLAlchemy
+- **Document processing:** `pypdf`, `python-docx`
+- **AI provider:** Google Gemini API through a server-side HTTP client
+- **Deployment:** Netlify (frontend) and Render (backend)
+
+## 🖥️ Project Structure
+
+```text
+BidWise-AI/
+├── backend/
+│   ├── app/
+│   │   ├── main.py           # FastAPI routes and API endpoints
+│   │   ├── services.py       # Document extraction and Gemini calls
+│   │   ├── config.py         # Environment-based settings
+│   │   ├── database.py       # Database connection and sessions
+│   │   ├── models.py         # SQLAlchemy models
+│   │   └── schemas.py        # Request/response schemas
+│   ├── .env.example
+│   └── requirements.txt
+├── frontend/
+│   ├── src/
+│   ├── .env.example
+│   ├── package.json
+│   └── vite.config.ts
+└── README.md
+```
+
+*Exact files may vary slightly as the project evolves.*
+
+## ⚙️ Prerequisites
+
+- Python 3.11 or 3.12 recommended
+- Node.js 20 LTS or newer
+- Git
+- VS Code
+- A Gemini API key for AI-powered features
+
+## 🚀 Run Locally on Windows
+
+Open the project folder in VS Code and use **two terminals**.
+
+### 1. Start the backend
+
 ```powershell
 cd backend
 py -3.12 -m venv .venv
@@ -29,41 +100,130 @@ py -3.12 -m venv .venv
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 Copy-Item .env.example .env
+```
+
+Open `backend/.env` and configure your Gemini key:
+
+```env
+GEMINI_API_KEY=your_key_here
+```
+
+Use a model currently available to your Google AI Studio project, configured using the variable names supported by `backend/app/config.py`. Do not commit `.env` or share its contents.
+
+Start FastAPI:
+
+```powershell
 uvicorn app.main:app --reload
 ```
-If `py -3.12` is unavailable, use `python -m venv .venv` with a supported Python version.
 
-Backend health: http://127.0.0.1:8000/health  
-API docs: http://127.0.0.1:8000/docs
+- API health: [http://127.0.0.1:8000/health](http://127.0.0.1:8000/health)
+- Interactive API docs: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
-### Terminal 2 — frontend
+### 2. Start the frontend
+
+Open a second terminal:
+
 ```powershell
 cd frontend
 npm install
 Copy-Item .env.example .env
 npm run dev
 ```
-Open the URL Vite prints, usually http://localhost:5173.
 
-## Optional Gemini configuration
-Add `GEMINI_API_KEY` to `backend/.env`. The key stays on the server and must never be put in a `VITE_` variable. The provider/model can change over time; check Google's current Gemini API model availability and free-tier quota before use. Missing key or quota errors are surfaced as errors, not replaced with fake answers.
+Open the local URL printed by Vite, usually [http://localhost:5173](http://localhost:5173).
 
-## Demo data
-The API seeds clearly labeled synthetic demo records on first startup. These are not live discoveries or real business opportunities. Delete them through the API or local database if you prefer an empty workspace.
+Set the frontend API base URL using the variable expected by the frontend (for example, `VITE_API_URL=http://127.0.0.1:8000`), if required by your `.env.example`.
 
-## Tests
-From `backend/` with the virtual environment activated:
-```powershell
-pytest
+## 🔐 Environment Variables
+
+### Backend
+
+| Variable | Purpose |
+| --- | --- |
+| `GEMINI_API_KEY` | Secret key used by the backend to call Gemini. |
+| `GEMINI_MODEL` | Optional model override if supported by the configuration; use a model available to your API project. |
+| `CORS_ORIGINS` | Comma-separated frontend origins allowed to call the API. |
+| `DATABASE_URL` | Optional database connection URL. SQLite is the starter default. |
+
+Check `backend/app/config.py` and `backend/.env.example` for exact variable names and defaults.
+
+### Frontend
+
+| Variable | Purpose |
+| --- | --- |
+| `VITE_API_URL` | Backend API base URL embedded at frontend build time. |
+
+**Never place `GEMINI_API_KEY` in a `VITE_` variable.** Frontend variables are visible to browser users.
+
+## ☁️ Deployment
+
+### Frontend — Netlify
+
+- Connect the GitHub repository.
+- Set the base directory to `frontend` (or use the equivalent root-level build configuration).
+- Build command: `npm run build`
+- Publish directory: `dist`
+- Set `VITE_API_URL` to the deployed backend URL.
+- Redeploy after changing build environment variables.
+
+### Backend — Render
+
+- Deploy the `backend` directory as a Python web service.
+- Start command:
+
+```bash
+uvicorn app.main:app --host 0.0.0.0 --port $PORT
 ```
 
-## Deployment notes
-- Frontend: Netlify build command `npm run build`, publish directory `dist`.
-- Backend: deploy the `backend` directory to a Python host with `uvicorn app.main:app --host 0.0.0.0 --port $PORT`.
-- Set `DATABASE_URL` to a persistent database URL for hosted use. SQLite on an ephemeral host is not durable.
+- Configure `GEMINI_API_KEY`, the supported model setting, and `CORS_ORIGINS` in Render's environment settings.
 - Set `CORS_ORIGINS` to the exact deployed frontend origin.
-- Configure an admin secret before exposing destructive administrative operations; this starter keeps destructive endpoints out of the public UI, but a full production deployment still needs server-side authorization hardening.
-- Free tiers may sleep, impose quotas, or change. No unlimited/free/permanent AI availability is promised.
+- For durable production data, configure a persistent database. Ephemeral local SQLite storage may not survive service restarts or redeploys.
+
+## 🧪 Verification
+
+1. Open `/health` on the backend and confirm the service responds.
+2. Open `/docs` and inspect the available API endpoints.
+3. Upload a text-based PDF or DOCX using the analysis endpoint.
+4. Confirm the response includes a summary and structured findings.
+5. Verify saved records and analytics using the API and frontend.
+
+If AI analysis fails, inspect backend logs and provider error details. Model availability, API access, quotas, and temporary provider outages can affect results.
+
+## 🛣️ Roadmap
+
+Potential future work—not all included in the current starter:
+
+- [ ] Live procurement-source discovery and crawling
+- [ ] Production authentication, authorization, and role-based access
+- [ ] OCR for scanned documents
+- [ ] Approved knowledge library with retrieval-augmented generation (RAG)
+- [ ] Rich compliance and evidence-gap workflows
+- [ ] Versioned approvals and collaboration
+- [ ] PDF/XLSX proposal exports
+- [ ] Persistent production database and operational monitoring
+
+## ⚠️ Important Notes
+
+- Demo records are synthetic examples, not live procurement opportunities.
+- AI-generated analysis can be incomplete or incorrect. Verify findings against the original document.
+- Do not treat generated findings as legal, security, or compliance certification.
+- Gemini access, model names, quotas, and availability can change. No unlimited or permanent free AI access is promised.
+- Keep API keys and `.env` files out of source control.
+
+## 📄 License
+
+This project is licensed under the MIT License. See [`LICENSE`](LICENSE) if included in the repository.
+
+---
+
+<div align="center">
+
+**Built with React, FastAPI, and Gemini API** 💙
+
+*Analyze documents. Organize requirements. Review with evidence.*
+
+</div>
+
 
 ## Architecture
 ```mermaid
