@@ -36,8 +36,19 @@ async def gemini_draft(requirement: str, evidence: str) -> str:
         "Return a concise professional draft and identify evidence gaps.\n\n"
         f"REQUIREMENT:\n{requirement}\n\nAPPROVED EVIDENCE:\n{evidence[:12000]}"
     )
+    
+    headers = {
+        "x-goog-api-key": settings.gemini_api_key,
+        "Content-Type": "application/json",
+    }
+
     async with httpx.AsyncClient(timeout=35) as client:
-        response = await client.post(url, params={"key": settings.gemini_api_key}, json={"contents":[{"parts":[{"text":prompt}]}]})
+        response = await client.post(
+            url,
+            headers=headers,
+            json={"contents": [{"parts": [{"text": prompt}]}]},
+        )
+
     if response.status_code == 429:
         raise RuntimeError("Gemini quota/rate limit reached (HTTP 429). Check your current provider quota.")
     response.raise_for_status()
@@ -124,12 +135,19 @@ DOCUMENT TEXT:
         },
     }
 
+    
+    headers = {
+        "x-goog-api-key": settings.gemini_api_key,
+        "Content-Type": "application/json",
+    }
+
     async with httpx.AsyncClient(timeout=60) as client:
         response = await client.post(
             url,
-            params={"key": settings.gemini_api_key},
+            headers=headers,
             json=payload,
         )
+
 
     if response.status_code == 429:
         raise RuntimeError(
