@@ -137,9 +137,20 @@ DOCUMENT TEXT:
         )
 
     if response.status_code in (400, 403, 404):
+        try:
+            error_data = response.json()
+            provider_message = (
+                error_data.get("error", {}).get("message", "")
+            )
+        except (ValueError, AttributeError):
+            provider_message = ""
+
+        # Never include the request URL or API key in the error.
+        safe_message = str(provider_message)[:300]
+
         raise RuntimeError(
             f"Gemini request rejected (HTTP {response.status_code}). "
-            "Check the configured model, API key, and API access."
+            f"Provider message: {safe_message or 'No details returned.'}"
         )
 
     response.raise_for_status()
