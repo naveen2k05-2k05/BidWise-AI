@@ -46,15 +46,6 @@ The application combines a React + TypeScript frontend with a FastAPI backend. G
 | ✍️ Response drafting | Generate a draft from a requirement and supplied evidence when Gemini is available. |
 | 🛡️ Server-side API key | Keep the Gemini key in backend environment configuration rather than frontend code. |
 
-## 🧰 Tech Stack
-
-- **Frontend:** React, TypeScript, Vite
-- **Backend:** Python, FastAPI
-- **Database:** SQLite by default, through SQLAlchemy
-- **Document processing:** `pypdf`, `python-docx`
-- **AI provider:** Google Gemini API through a server-side HTTP client
-- **Deployment:** Netlify (frontend) and Render (backend)
-
 ## 🖥️ Project Structure
 
 ```text
@@ -77,38 +68,11 @@ BidWise-AI/
 └── README.md
 ```
 
-*Exact files may vary slightly as the project evolves.*
-
-## ⚙️ Prerequisites
-
-- Python 3.11 or 3.12 recommended
-- Node.js 20 LTS or newer
-- Git
-- VS Code
-- A Gemini API key for AI-powered features
-
 ## 🚀 Run Locally on Windows
 
 Open the project folder in VS Code and use **two terminals**.
 
 ### 1. Start the backend
-
-```powershell
-cd backend
-py -3.12 -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --upgrade pip
-pip install -r requirements.txt
-Copy-Item .env.example .env
-```
-
-Open `backend/.env` and configure your Gemini key:
-
-```env
-GEMINI_API_KEY=your_key_here
-```
-
-Use a model currently available to your Google AI Studio project, configured using the variable names supported by `backend/app/config.py`. Do not commit `.env` or share its contents.
 
 Start FastAPI:
 
@@ -188,27 +152,6 @@ uvicorn app.main:app --host 0.0.0.0 --port $PORT
 5. Verify saved records and analytics using the API and frontend.
 
 If AI analysis fails, inspect backend logs and provider error details. Model availability, API access, quotas, and temporary provider outages can affect results.
-
-## 🛣️ Roadmap
-
-Potential future work—not all included in the current starter:
-
-- [ ] Live procurement-source discovery and crawling
-- [ ] Production authentication, authorization, and role-based access
-- [ ] OCR for scanned documents
-- [ ] Approved knowledge library with retrieval-augmented generation (RAG)
-- [ ] Rich compliance and evidence-gap workflows
-- [ ] Versioned approvals and collaboration
-- [ ] PDF/XLSX proposal exports
-- [ ] Persistent production database and operational monitoring
-
-## ⚠️ Important Notes
-
-- Demo records are synthetic examples, not live procurement opportunities.
-- AI-generated analysis can be incomplete or incorrect. Verify findings against the original document.
-- Do not treat generated findings as legal, security, or compliance certification.
-- Gemini access, model names, quotas, and availability can change. No unlimited or permanent free AI access is promised.
-- Keep API keys and `.env` files out of source control.
 
 ## 📄 License
 
