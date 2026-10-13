@@ -33,6 +33,16 @@ The application combines a React + TypeScript frontend with a FastAPI backend. G
 
 > **Project status:** This repository is a runnable starter with core API endpoints and document-analysis integration. It is not yet a complete enterprise procurement automation platform. AI availability depends on provider access, model availability, quotas, and service status.
 
+## Architecture
+```mermaid
+flowchart LR
+  UI[React + Vite] --> API[FastAPI]
+  API --> DB[(SQLite locally / PostgreSQL hosted)]
+  API --> DOC[PDF/DOCX extraction]
+  DOC --> AI[Gemini provider adapter]
+  AI --> API
+  API --> UI
+```
 ## 🎯 Core Features
 
 | Feature | Description |
@@ -68,59 +78,6 @@ BidWise-AI/
 └── README.md
 ```
 
-## 🚀 Run Locally on Windows
-
-Open the project folder in VS Code and use **two terminals**.
-
-### 1. Start the backend
-
-Start FastAPI:
-
-```powershell
-uvicorn app.main:app --reload
-```
-
-- API health: [http://127.0.0.1:8000/health](http://127.0.0.1:8000/health)
-- Interactive API docs: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-
-### 2. Start the frontend
-
-Open a second terminal:
-
-```powershell
-cd frontend
-npm install
-Copy-Item .env.example .env
-npm run dev
-```
-
-Open the local URL printed by Vite, usually [http://localhost:5173](http://localhost:5173).
-
-Set the frontend API base URL using the variable expected by the frontend (for example, `VITE_API_URL=http://127.0.0.1:8000`), if required by your `.env.example`.
-
-## 🔐 Environment Variables
-
-### Backend
-
-| Variable | Purpose |
-| --- | --- |
-| `GEMINI_API_KEY` | Secret key used by the backend to call Gemini. |
-| `GEMINI_MODEL` | Optional model override if supported by the configuration; use a model available to your API project. |
-| `CORS_ORIGINS` | Comma-separated frontend origins allowed to call the API. |
-| `DATABASE_URL` | Optional database connection URL. SQLite is the starter default. |
-
-Check `backend/app/config.py` and `backend/.env.example` for exact variable names and defaults.
-
-### Frontend
-
-| Variable | Purpose |
-| --- | --- |
-| `VITE_API_URL` | Backend API base URL embedded at frontend build time. |
-
-**Never place `GEMINI_API_KEY` in a `VITE_` variable.** Frontend variables are visible to browser users.
-
-## ☁️ Deployment
-
 ### Frontend — Netlify
 
 - Connect the GitHub repository.
@@ -143,16 +100,6 @@ uvicorn app.main:app --host 0.0.0.0 --port $PORT
 - Set `CORS_ORIGINS` to the exact deployed frontend origin.
 - For durable production data, configure a persistent database. Ephemeral local SQLite storage may not survive service restarts or redeploys.
 
-## 🧪 Verification
-
-1. Open `/health` on the backend and confirm the service responds.
-2. Open `/docs` and inspect the available API endpoints.
-3. Upload a text-based PDF or DOCX using the analysis endpoint.
-4. Confirm the response includes a summary and structured findings.
-5. Verify saved records and analytics using the API and frontend.
-
-If AI analysis fails, inspect backend logs and provider error details. Model availability, API access, quotas, and temporary provider outages can affect results.
-
 ## 📄 License
 
 This project is licensed under the MIT License. See [`LICENSE`](LICENSE) if included in the repository.
@@ -167,17 +114,6 @@ This project is licensed under the MIT License. See [`LICENSE`](LICENSE) if incl
 
 </div>
 
-
-## Architecture
-```mermaid
-flowchart LR
-  UI[React + Vite] --> API[FastAPI]
-  API --> DB[(SQLite locally / PostgreSQL hosted)]
-  API --> DOC[PDF/DOCX extraction]
-  DOC --> AI[Gemini provider adapter]
-  AI --> API
-  API --> UI
-```
 
 ## Troubleshooting
 - `py` not found: install Python and enable the Python launcher, or use `python`.
