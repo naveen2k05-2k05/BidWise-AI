@@ -1,0 +1,28 @@
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+node_modules/
+dist/
+*.db
+uploads/
+
+
+# Environment variables and secrets
+.env.*
+!.env.example
+
+# Python tooling
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Frontend environment secrets
+.env.local
+.env.*.local
+
+# Editor and operating-system files
+.vscode/
+.DS_Store
+Thumbs.db
