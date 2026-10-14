@@ -2,7 +2,7 @@
 
 # 🚀 BidWise AI
 
-### AI-Powered RFP Analysis & Response Workspace
+### AI-Powered RFP Analysis & Response Workspace.
 
 **Turn complex RFP documents into structured requirements, risk insights, and review-ready findings.**
 
