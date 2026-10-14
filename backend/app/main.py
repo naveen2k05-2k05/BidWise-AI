@@ -1,4 +1,5 @@
 
+
 from datetime import date
 import json
 
@@ -38,6 +39,7 @@ origins = [
     for origin in settings.cors_origins.split(",")
     if origin.strip()
 ]
+
 
 app.add_middleware(
     CORSMiddleware,
