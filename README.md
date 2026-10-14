@@ -120,4 +120,4 @@ This project is licensed under the MIT License. See [`LICENSE`](LICENSE) if incl
 - PowerShell blocks activation: run `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass` in that terminal, then activate again.
 - Port 8000 busy: `uvicorn app.main:app --reload --port 8001`.
 - Port 5173 busy: Vite automatically offers another port.
-- Gemini 429/quota: wait or review provider quota; no fake fallback is generated.
+- Gemini 429/quota: wait or review provider quota; no fake fallback is generated
