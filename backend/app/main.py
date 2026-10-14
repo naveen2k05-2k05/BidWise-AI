@@ -1,5 +1,3 @@
-
-
 from datetime import date
 import json
 
@@ -731,11 +729,18 @@ async def analyze_document(
             detail=f"AI analysis unavailable: {str(exc)[:250]}",
         ) from exc
 
+    
     except Exception as exc:
+        import traceback
+        traceback.print_exc()
         raise HTTPException(
             status_code=502,
-            detail=f"AI analysis failed: {str(exc)[:250]}",
+            detail=(
+                f"AI analysis failed: "
+                f"{type(exc).__name__}: {str(exc)[:500]}"
+            ),
         ) from exc
+
 
     record = Analysis(
         filename=filename,
