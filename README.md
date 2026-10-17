@@ -106,14 +106,6 @@ This project is licensed under the MIT License. See [`LICENSE`](LICENSE) if incl
 
 ---
 
-<div align="center">
-
-**Built with React, FastAPI, and Gemini API** 💙
-
-*Analyze documents. Organize requirements. Review with evidence.*
-
-</div>
-
 
 ## Troubleshooting
 - `py` not found: install Python and enable the Python launcher, or use `python`.
@@ -121,3 +113,11 @@ This project is licensed under the MIT License. See [`LICENSE`](LICENSE) if incl
 - Port 8000 busy: `uvicorn app.main:app --reload --port 8001`.
 - Port 5173 busy: Vite automatically offers another port.
 - Gemini 429/quota: wait or review provider quota; no fake fallback is generated
+
+<div align="center">
+
+**Built with React, FastAPI, and Gemini API** 💙
+
+*Analyze documents. Organize requirements. Review with evidence.*
+
+</div>
