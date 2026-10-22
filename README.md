@@ -31,8 +31,6 @@
 
 The application combines a React + TypeScript frontend with a FastAPI backend. Gemini integration is performed server-side, keeping the provider key out of the browser.
 
-> **Project status:** This repository is a runnable starter with core API endpoints and document-analysis integration. It is not yet a complete enterprise procurement automation platform. AI availability depends on provider access, model availability, quotas, and service status.
-
 ## Architecture
 ```mermaid
 flowchart LR
